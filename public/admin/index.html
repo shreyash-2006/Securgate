@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institute Security App</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>SecurGate</span>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-view="dashboard"><i class="fa-solid fa-house"></i> Dashboard</li>
+                <li data-view="scanner"><i class="fa-solid fa-qrcode"></i> Gate Scanner</li>
+                <li data-view="tracker"><i class="fa-solid fa-location-dot"></i> Tracker</li>
+                <li data-view="manage"><i class="fa-solid fa-users"></i> Manage Passes</li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header>
+                <h1 id="page-title">Dashboard</h1>
+                <div class="user-profile">
+                    <div class="avatar">A</div>
+                    <span>Admin</span>
+                </div>
+            </header>
+
+            <div class="view-container">
+                <!-- Dashboard View -->
+                <section id="view-dashboard" class="view active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fa-solid fa-id-badge text-blue"></i>
+                            <div>
+                                <h3 id="stat-active-passes">0</h3>
+                                <p>Active Passes</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fa-solid fa-arrow-right-to-bracket text-green"></i>
+                            <div>
+                                <h3 id="stat-entries-today">0</h3>
+                                <p>Entries Today</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fa-solid fa-arrow-right-from-bracket text-red"></i>
+                            <div>
+                                <h3 id="stat-exits-today">0</h3>
+                                <p>Exits Today</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-content">
+                        <div class="gates-status card">
+                            <h2>Live Gate Occupancy</h2>
+                            <canvas id="gatesChart"></canvas>
+                        </div>
+                        <div class="recent-events card">
+                            <h2>Recent Activity</h2>
+                            <ul id="activity-feed" class="feed-list">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+
+
+                <!-- Gate Scanner View -->
+                <section id="view-scanner" class="view hidden">
+                    <div class="scanner-setup card">
+                        <h2>Gate/Room Scanner Setup</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Scan Mode</label>
+                                <select id="scan-mode">
+                                    <option value="gate">Gate Entry/Exit</option>
+                                    <option value="room">Room Entry/Exit</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="gate-select-group">
+                                <label>Select Gate</label>
+                                <select id="scan-gate-number">
+                                    <script>
+                                        for(let i=1; i<=13; i++) document.write(`<option value="${i}">Gate ${i}</option>`);
+                                    </script>
+                                </select>
+                            </div>
+                            <div class="form-group hidden" id="room-select-group">
+                                <label>Room Name</label>
+                                <input type="text" id="scan-room-name" placeholder="e.g. ServerRoom">
+                            </div>
+                        </div>
+                        <button id="start-scanner-btn" class="btn-primary">Start Scanner</button>
+                    </div>
+
+                    <div id="scanner-container" class="card hidden">
+                        <div id="reader"></div>
+                        <div id="scan-result" class="scan-feedback">
+                            <!-- Feedback will be injected here -->
+                        </div>
+                        <button id="stop-scanner-btn" class="btn-secondary mt-2">Stop Scanner</button>
+                    </div>
+                </section>
+
+                <!-- Tracker View -->
+                <section id="view-tracker" class="view hidden">
+                    <div class="card">
+                        <h2>Movement Tracker</h2>
+                        <div class="table-responsive">
+                            <table class="data-table" id="tracker-table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Name</th>
+                                        <th>Pass Type</th>
+                                        <th>Location</th>
+                                        <th>Action</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Manage Passes View -->
+                <section id="view-manage" class="view hidden">
+                    <div class="card">
+                        <h2>Pass Directory</h2>
+                        <div class="table-responsive">
+                            <table class="data-table" id="passes-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>ID</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Issued</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <!-- Modules -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
