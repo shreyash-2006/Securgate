@@ -1,0 +1,14 @@
+{
+  "name": "institute-security-app",
+  "version": "1.0.0",
+  "description": "Institute Security Management System",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "sqlite3": "^6.0.1",
+    "uuid": "^14.0.0"
+  }
+}
