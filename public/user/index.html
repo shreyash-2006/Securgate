@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Institute Pass Registration</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/user/style.css">
 </head>
+
 <body>
     <div class="user-portal-container">
         <header class="portal-header">
@@ -27,7 +31,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>Full Name</label>
-                            <input type="text" id="pass-name" required placeholder="John Doe">
+                            <input type="text" id="pass-name" required placeholder="Your Name">
                         </div>
                         <div class="form-group">
                             <label>ID / Roll Number</label>
@@ -57,15 +61,17 @@
                         <label>Purpose of Visit</label>
                         <input type="text" id="pass-purpose" placeholder="e.g. Meeting">
                     </div>
-                    
+
                     <button type="submit" class="btn-primary w-100 mt-2">Generate My Pass</button>
                 </form>
             </section>
 
             <!-- Pass Preview Modal -->
             <div id="pass-preview" class="card hidden">
-                <h2 style="color: var(--status-green);"><i class="fa-solid fa-circle-check"></i> Pass Generated Successfully</h2>
-                <p style="color: var(--text-muted); text-align: center; margin-bottom: 20px;">Please show this QR code at the entry/exit gates.</p>
+                <h2 style="color: var(--status-green);"><i class="fa-solid fa-circle-check"></i> Pass Generated
+                    Successfully</h2>
+                <p style="color: var(--text-muted); text-align: center; margin-bottom: 20px;">Please show this QR code
+                    at the entry/exit gates.</p>
                 <div class="pass-card" id="generated-pass-card">
                     <div class="pass-header">
                         <h3 id="card-type">Visitor Pass</h3>
@@ -91,4 +97,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script type="module" src="/user/app.js"></script>
 </body>
+
 </html>
