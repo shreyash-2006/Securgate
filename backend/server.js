@@ -38,7 +38,7 @@ app.post('/api/passes', (req, res) => {
     stmt.run(id, name, idNumber, contact, org, purpose, type, gatesStr, roomsStr, expiresAt, function(err) {
         if (err) {
             console.error('Error creating pass:', err);
-            return res.status(500).json({ error: 'Failed to create pass' });
+            return res.status(500).json({ error: 'Failed to create pass', details: err.message || err.toString() });
         }
         res.status(201).json({ id, message: 'Pass created successfully' });
     });

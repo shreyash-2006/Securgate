@@ -36,17 +36,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-            const result = await res.json();
+            
+            const textResult = await res.text();
+            let result;
+            try {
+                result = JSON.parse(textResult);
+            } catch (err) {
+                alert('Server returned invalid JSON. Raw response:\n' + textResult.substring(0, 200));
+                return;
+            }
             
             if (res.ok && result.id) {
                 document.getElementById('view-passes').classList.add('hidden');
                 showPassPreview(data, result.id);
             } else {
-                alert('Failed to generate pass: ' + (result.error || 'Unknown Error'));
+                alert('Failed to generate pass: ' + (result.error || result.details || 'Unknown Error'));
             }
         } catch (error) {
             console.error(error);
-            alert('Network error while generating pass.');
+            alert('Network error while generating pass. Check console.');
         }
     });
 });
