@@ -21,6 +21,10 @@ app.get('/', (req, res) => {
 
 // --- ROUTES FOR PASSES ---
 
+app.get('/api/ping', (req, res) => {
+    res.json({ message: 'pong', url: req.url, originalUrl: req.originalUrl });
+});
+
 // Create a new pass
 app.post('/api/passes', (req, res) => {
     const { name, idNumber, contact, org, purpose, type, allowedGates, allowedRooms, expiresAt } = req.body;
