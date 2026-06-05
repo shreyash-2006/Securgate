@@ -2,8 +2,5 @@
   "version": 2,
   "redirects": [
     { "source": "/", "destination": "/user", "permanent": false }
-  ],
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api" }
   ]
 }

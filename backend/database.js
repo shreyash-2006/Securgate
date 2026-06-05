@@ -48,18 +48,22 @@ const db = {
 };
 
 // Initialize AlaSQL tables
-alasql(`CREATE TABLE IF NOT EXISTS passes (
-    id STRING PRIMARY KEY, name STRING, idNumber STRING, contact STRING, 
-    org STRING, purpose STRING, type STRING, allowedGates STRING, 
-    allowedRooms STRING, issuedAt DATETIME DEFAULT CURRENT_TIMESTAMP, 
-    expiresAt DATETIME, status STRING DEFAULT 'active'
-)`);
-alasql(`CREATE TABLE IF NOT EXISTS events (
-    id STRING PRIMARY KEY, passId STRING, gate INTEGER, room STRING, 
-    eventType STRING NOT NULL, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, 
-    reason STRING
-)`);
-
-console.log('Connected to AlaSQL database.');
+try {
+    alasql(`CREATE TABLE IF NOT EXISTS passes (
+        id STRING PRIMARY KEY, name STRING, idNumber STRING, contact STRING, 
+        org STRING, purpose STRING, type STRING, allowedGates STRING, 
+        allowedRooms STRING, issuedAt DATETIME DEFAULT CURRENT_TIMESTAMP, 
+        expiresAt DATETIME, status STRING DEFAULT 'active'
+    )`);
+    alasql(`CREATE TABLE IF NOT EXISTS events (
+        id STRING PRIMARY KEY, passId STRING, gate INTEGER, room STRING, 
+        eventType STRING NOT NULL, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, 
+        reason STRING
+    )`);
+    console.log('Connected to AlaSQL database.');
+} catch (err) {
+    console.error("ALASQL INIT ERROR", err);
+    db._initError = err.message || String(err);
+}
 
 module.exports = db;
